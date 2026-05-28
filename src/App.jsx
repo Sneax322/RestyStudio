@@ -23,8 +23,8 @@ function AppLayout() {
       <Navbar />
       <main>
         <Routes>
-          {/* Default landing page */}
-          <Route index element={<Navigate to="/" replace />} />
+          {/* Make the app root the Home page */}
+          <Route index element={<Home />} />
 
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
@@ -33,6 +33,9 @@ function AppLayout() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/order-success" element={<OrderSuccess />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
+
+          {/* Catch-all: send unknown routes back to Home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
       <Footer />
