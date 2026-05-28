@@ -1,6 +1,6 @@
-# PaperCraft Studio 🌸
+# RestyStudio 🌸
 
-A beautiful printable products shop for Filipino students — built with React + Vite + Tailwind CSS.
+A beautiful printed products shop for Filipino students — built with React + Vite + Tailwind CSS.
 
 ## Features
 
@@ -8,7 +8,7 @@ A beautiful printable products shop for Filipino students — built with React +
 - ✏️ Real-time customization (subject, name, section)
 - 🛒 Shopping cart with local storage persistence
 - 💸 GCash & Maya payment flow
-- 🧾 Order receipt page (printable)
+- 🧾 Order receipt page
 - 🌙 Dark mode
 - 📱 Fully mobile-responsive
 
@@ -59,11 +59,11 @@ Edit `src/data/products.json` — each product follows this schema:
 
 ## Payment Setup
 
-Replace the placeholder numbers in `src/pages/Checkout.jsx`:
+GCash and Maya payment numbers are set in `src/pages/Checkout.jsx`:
 ```js
-const GCASH_NUMBER = '0917-XXX-XXXX'  // ← your GCash number
-const MAYA_NUMBER = '0917-XXX-XXXX'   // ← your Maya number
-const STORE_NAME = 'PaperCraft Studio' // ← your store name
+const GCASH_NUMBER = '09944153353'  // RestyStudio GCash number
+const MAYA_NUMBER = '09944153353'   // RestyStudio Maya number
+const STORE_NAME = 'RestyStudio' // Store name
 ```
 
 ## Optional: EmailJS Integration
