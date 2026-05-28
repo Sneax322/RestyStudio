@@ -1,0 +1,100 @@
+[
+  {
+    "id": "notebook-labels",
+    "name": "Notebook Labels",
+    "tagline": "Customize your school notebooks with beautiful labels",
+    "description": "Printable notebook cover labels designed to fit standard notebooks. Available in multiple aesthetic designs — perfect for every subject!",
+    "category": "labels",
+    "price": 25,
+    "unit": "per set of 4",
+    "featured": true,
+    "badge": "Best Seller",
+    "designs": [
+      {
+        "id": "pastel-bloom",
+        "name": "Pastel Bloom",
+        "description": "Soft floral watercolor tones",
+        "colorA": "#fce7f3",
+        "colorB": "#e9d5ff",
+        "accent": "#d946ef",
+        "emoji": "🌸"
+      },
+      {
+        "id": "ocean-breeze",
+        "name": "Ocean Breeze",
+        "description": "Cool blue & mint waves",
+        "colorA": "#e0f2fe",
+        "colorB": "#d1fae5",
+        "accent": "#0891b2",
+        "emoji": "🌊"
+      },
+      {
+        "id": "sunset-vibe",
+        "name": "Sunset Vibe",
+        "description": "Warm peach & golden tones",
+        "colorA": "#fff7ed",
+        "colorB": "#fef3c7",
+        "accent": "#f97316",
+        "emoji": "🌅"
+      },
+      {
+        "id": "forest-study",
+        "name": "Forest Study",
+        "description": "Earthy greens & warm sage",
+        "colorA": "#f0fdf4",
+        "colorB": "#d1fae5",
+        "accent": "#16a34a",
+        "emoji": "🌿"
+      },
+      {
+        "id": "lavender-dreams",
+        "name": "Lavender Dreams",
+        "description": "Dreamy violet & soft lilac",
+        "colorA": "#f5f3ff",
+        "colorB": "#ede9fe",
+        "accent": "#7c3aed",
+        "emoji": "💜"
+      },
+      {
+        "id": "classic-minimal",
+        "name": "Classic Minimal",
+        "description": "Clean white with bold lines",
+        "colorA": "#f8fafc",
+        "colorB": "#f1f5f9",
+        "accent": "#334155",
+        "emoji": "📐"
+      }
+    ],
+    "fields": [
+      { "id": "subject", "label": "Subject", "placeholder": "e.g. Mathematics", "required": true, "maxLength": 30 },
+      { "id": "name", "label": "Student Name", "placeholder": "e.g. Juan Dela Cruz", "required": true, "maxLength": 40 },
+      { "id": "section", "label": "Section / Class", "placeholder": "e.g. Narra", "required": true, "maxLength": 20 }
+    ]
+  },
+  {
+    "id": "book-covers",
+    "name": "Book Covers",
+    "tagline": "Protect your books with personalized printed covers",
+    "description": "Durable book covers in multiple sizes — print, cut, and wrap around your textbooks and handbooks.",
+    "category": "covers",
+    "price": 35,
+    "unit": "per set of 2",
+    "featured": false,
+    "badge": "Coming Soon",
+    "designs": [],
+    "fields": []
+  },
+  {
+    "id": "planner-inserts",
+    "name": "Planner Inserts",
+    "tagline": "Stay organized with beautiful weekly planner pages",
+    "description": "Weekly and monthly planner inserts sized for A5 or standard notebooks — cute, functional, and printable.",
+    "category": "planners",
+    "price": 40,
+    "unit": "per month set",
+    "featured": false,
+    "badge": "Coming Soon",
+    "designs": [],
+    "fields": []
+  }
+]
