@@ -1,5 +1,5 @@
 import { useLocation, Link } from 'react-router-dom'
-import { CheckCircle, Download, Share2, Home } from 'lucide-react'
+import { CheckCircle, Download, Home } from 'lucide-react'
 
 export default function OrderSuccess() {
   const { state } = useLocation()
@@ -27,10 +27,10 @@ export default function OrderSuccess() {
         </div>
 
         <h1 className="text-3xl font-black text-slate-800 dark:text-slate-100 mb-2">
-          Order Placed! 🎉
+          Order Placed!
         </h1>
         <p className="text-slate-500 dark:text-slate-400 mb-8">
-          Thank you, <strong className="text-slate-700 dark:text-slate-200">{form.name}</strong>! We'll process your order and send the files shortly.
+          Thank you, <strong className="text-slate-700 dark:text-slate-200">{form.name}</strong>! We’ll print your order and reach out to arrange pickup or delivery.
         </p>
 
         {/* Receipt card */}
@@ -38,7 +38,7 @@ export default function OrderSuccess() {
           {/* Header */}
           <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-100 dark:border-slate-700">
             <div>
-              <p className="font-black text-lg gradient-text">PaperCraft Studio</p>
+              <p className="font-black text-lg gradient-text">RestyStudio</p>
               <p className="text-xs text-slate-400">Order Receipt</p>
             </div>
             <div className="text-right">
@@ -75,12 +75,14 @@ export default function OrderSuccess() {
             <p>📱 {form.contact}</p>
             {form.email && <p>📧 {form.email}</p>}
             {form.notes && <p>📝 {form.notes}</p>}
+            {form.fulfillment && <p>📦 Fulfillment: {form.fulfillment}</p>}
+            {form.fulfillment === 'delivery' && form.address && <p>📍 Address: {form.address}</p>}
           </div>
 
           {/* Status */}
           <div className="mt-4 flex items-center gap-2 p-3 bg-green-50 dark:bg-green-950/30 rounded-xl">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-green-600 dark:text-green-400 text-xs font-semibold">Processing — files will be sent within 24 hours</span>
+            <span className="text-green-600 dark:text-green-400 text-xs font-semibold">Processing — we’ll message you to arrange pickup or delivery</span>
           </div>
         </div>
 
@@ -96,7 +98,7 @@ export default function OrderSuccess() {
         </div>
 
         <p className="mt-6 text-xs text-slate-400">
-          Questions? Message us on Facebook or send an email. We'll get back to you ASAP! 💕
+          Questions? Message us on Facebook or send an email. We'll get back to you ASAP!
         </p>
       </div>
     </div>
