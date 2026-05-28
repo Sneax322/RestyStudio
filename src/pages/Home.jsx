@@ -12,7 +12,7 @@ const testimonials = [
 const features = [
   { icon: Sparkles, title: 'Beautiful Designs', desc: 'Curated aesthetic templates made for students', color: 'from-fuchsia-500 to-violet-500' },
   { icon: Zap, title: 'Instant Preview', desc: 'See your customization live before ordering', color: 'from-orange-400 to-pink-500' },
-  { icon: Printer, title: 'Print-Ready', desc: 'High-res files ready to print at home or shop', color: 'from-cyan-500 to-blue-500' },
+  { icon: Printer, title: 'Printed for You', desc: 'We print your labels and arrange pickup or delivery', color: 'from-cyan-500 to-blue-500' },
   { icon: Shield, title: 'Secure & Easy', desc: 'Simple GCash/Maya payment, no sign-up needed', color: 'from-green-500 to-emerald-500' },
 ]
 
@@ -34,7 +34,7 @@ export default function Home() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm font-semibold text-fuchsia-600 dark:text-fuchsia-400 mb-6 shadow-sm">
             <Sparkles className="w-4 h-4" />
-            Printable Templates for Filipino Students
+            Printed Notebook Labels for Filipino Students
           </div>
 
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-black leading-tight mb-6">
@@ -45,8 +45,8 @@ export default function Home() {
           </h1>
 
           <p className="text-lg sm:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Customize beautiful printable notebook labels with your name, subject, and section.
-            Print at home — same-day ready!
+            Customize beautiful notebook labels with your name, subject, and section.
+            We print your order and arrange pickup or delivery.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -62,7 +62,7 @@ export default function Home() {
           <div className="mt-10 flex items-center justify-center gap-6 text-sm text-slate-500 dark:text-slate-400">
             <div className="flex -space-x-2">
               {['🧑‍🎓', '👩‍🎓', '🧑‍🎓', '👩‍🎓'].map((e, i) => (
-                <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-fuchsia-100 to-violet-100 dark:from-fuchsia-900 dark:to-violet-900 flex items-center justify-center text-sm border-2 border-white dark:border-slate-800">
+                <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-fuchsia-100 to-violet-100 dark:from-fuchsia-900 dark:to-violet-900 flex items-center justify-center text-sm border border-white/80 dark:border-slate-800">
                   {e}
                 </div>
               ))}
@@ -116,7 +116,7 @@ export default function Home() {
           <div className="flex items-end justify-between mb-8">
             <div>
               <p className="text-fuchsia-500 font-semibold text-sm mb-1 uppercase tracking-wider">Our Products</p>
-              <h2 className="text-3xl font-black text-slate-800 dark:text-slate-100">Printable Templates</h2>
+              <h2 className="text-3xl font-black text-slate-800 dark:text-slate-100">Notebook Labels</h2>
             </div>
             <Link to="/products" className="text-fuchsia-600 font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all">
               View all <ArrowRight className="w-4 h-4" />
@@ -138,7 +138,7 @@ export default function Home() {
             {[
               { num: '01', title: 'Choose a Design', desc: 'Pick from our beautiful notebook label templates', emoji: '🎨' },
               { num: '02', title: 'Customize It', desc: 'Enter your name, subject, and section — see it live!', emoji: '✏️' },
-              { num: '03', title: 'Print & Enjoy', desc: 'Pay via GCash or Maya, download, and print!', emoji: '🖨️' },
+              { num: '03', title: 'We Print & Arrange', desc: 'Pay via GCash or Maya — we print your order and arrange pickup or delivery.', emoji: '🖨️' },
             ].map(step => (
               <div key={step.num} className="glass-card rounded-2xl p-6">
                 <div className="text-4xl mb-3">{step.emoji}</div>
