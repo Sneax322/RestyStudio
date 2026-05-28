@@ -6,7 +6,7 @@ const steps = [
     num: '01',
     emoji: '🎨',
     title: 'Choose Your Design',
-    desc: 'Browse our collection of beautiful notebook label templates. We have pastel, minimal, ocean, and more aesthetic styles to match your vibe.',
+    desc: 'Browse our collection of beautiful notebook label designs. We have pastel, minimal, ocean, and more aesthetic styles to match your vibe.',
     detail: 'Each design is crafted with Filipino students in mind — colorful, cute, and organized.',
   },
   {
@@ -32,27 +32,26 @@ const steps = [
   },
   {
     num: '05',
-    emoji: '📧',
-    title: 'Receive Your Files',
-    desc: 'After payment verification, we\'ll send your print-ready PDF files within 24 hours via email or Messenger.',
-    detail: 'Files are high-resolution (300 DPI) — perfect for home printing or print shops.',
+    emoji: '🖨️',
+    title: 'We Print Your Order',
+    desc: 'After payment verification, we’ll print your labels for you.',
+    detail: 'We’ll reach out to confirm details and schedule pickup or delivery.',
   },
   {
     num: '06',
-    emoji: '🖨️',
-    title: 'Print & Enjoy!',
-    desc: 'Print at home with any printer or take to a printing shop. Cut out your labels and stick them on your notebooks!',
-    detail: 'We recommend glossy sticker paper for the best results. Happy studying! 📚',
+    emoji: '📦',
+    title: 'Pickup or Delivery',
+    desc: 'We print your order and reach out to arrange pickup or delivery.',
+    detail: 'If you chose delivery at checkout, please make sure your address is complete.',
   },
 ]
 
 const faqs = [
-  { q: 'How long until I receive my files?', a: 'Within 24 hours of payment confirmation. Usually much faster — we process orders same day during school hours.' },
-  { q: 'What file format will I receive?', a: 'High-resolution PDF files, print-ready at 300 DPI. We also include a .PNG version.' },
+  { q: 'How long until my order is ready?', a: 'After payment confirmation, we start printing your order. We’ll message you to arrange pickup or delivery.' },
+  { q: 'Do I need to print anything?', a: 'No—RestyStudio prints your order for you. Just choose pickup or delivery at checkout.' },
   { q: 'Can I customize the font or colors?', a: 'Currently, designs come with pre-set fonts and color schemes. Custom design requests are available — message us for a quote!' },
-  { q: 'What paper should I use?', a: 'Any regular paper works, but glossy sticker paper (meron sa National Bookstore!) gives the best finish.' },
-  { q: 'Can I order for someone else?', a: 'Yes! Just enter their details in the customization fields. Great for bulk orders as class gifts too.' },
-  { q: 'What if I made a mistake in my order?', a: 'Contact us ASAP via Messenger or email before we process your order. Revisions are free within 30 minutes of ordering.' },
+  { q: 'Can I order for someone else?', a: 'Yes! Just enter their details in the customization fields and put their contact details for coordination.' },
+  { q: 'What if I made a mistake in my order?', a: 'Contact us ASAP via Messenger or email before we print your order. Revisions are free within 30 minutes of ordering.' },
 ]
 
 export default function HowItWorks() {
@@ -65,7 +64,7 @@ export default function HowItWorks() {
             How It <span className="gradient-text">Works</span>
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-lg">
-            From browsing to printing — it's super easy and takes less than 5 minutes! ⚡
+            From browsing to pickup/delivery — it’s super easy and takes less than 5 minutes! ⚡
           </p>
         </div>
 
@@ -75,7 +74,7 @@ export default function HowItWorks() {
           <div className="absolute left-7 top-0 bottom-0 w-0.5 bg-gradient-to-b from-fuchsia-200 to-violet-200 dark:from-fuchsia-900 dark:to-violet-900 hidden sm:block" />
 
           <div className="space-y-6">
-            {steps.map((step, i) => (
+            {steps.map((step) => (
               <div key={step.num} className="relative flex gap-5">
                 {/* Step circle */}
                 <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-fuchsia-500 to-violet-500 flex flex-col items-center justify-center shadow-md z-10">
@@ -98,7 +97,7 @@ export default function HowItWorks() {
         <div className="my-16 text-center glass-card rounded-3xl p-10">
           <div className="text-4xl mb-4">🚀</div>
           <h2 className="text-2xl font-black text-slate-800 dark:text-slate-100 mb-3">Ready to get started?</h2>
-          <p className="text-slate-500 dark:text-slate-400 mb-6">Gorgeous notebooks, here you come!</p>
+          <p className="text-slate-500 dark:text-slate-400 mb-6">Cute notebooks, here you come!</p>
           <Link to="/products" className="btn-primary inline-flex items-center gap-2 text-base">
             Shop Now <ArrowRight className="w-4 h-4" />
           </Link>
