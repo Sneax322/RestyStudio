@@ -3,15 +3,24 @@ import { useNavigate } from 'react-router-dom'
 import { Check, Copy, ChevronDown, ChevronUp } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 
-const GCASH_NUMBER = '0917-XXX-XXXX'
-const MAYA_NUMBER = '0917-XXX-XXXX'
-const STORE_NAME = 'PaperCraft Studio'
+const GCASH_NUMBER = '09944153353'
+const MAYA_NUMBER = '09944153353'
+const STORE_NAME = 'RestyStudio'
 
 export default function Checkout() {
   const { items, total, clearCart } = useCart()
   const navigate = useNavigate()
   const [step, setStep] = useState(1)
-  const [form, setForm] = useState({ name: '', contact: '', email: '', payment: 'gcash', refNo: '', notes: '' })
+  const [form, setForm] = useState({
+    name: '',
+    contact: '',
+    email: '',
+    payment: 'gcash',
+    refNo: '',
+    fulfillment: 'pickup',
+    address: '',
+    notes: '',
+  })
   const [errors, setErrors] = useState({})
   const [copied, setCopied] = useState('')
   const [payExpanded, setPayExpanded] = useState(true)
@@ -32,6 +41,7 @@ export default function Checkout() {
     if (!form.name.trim()) e.name = 'Required'
     if (!form.contact.trim()) e.contact = 'Required'
     if (!form.refNo.trim()) e.refNo = 'Required — enter your payment reference number'
+    if (form.fulfillment === 'delivery' && !form.address.trim()) e.address = 'Required for delivery'
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -46,7 +56,7 @@ export default function Checkout() {
     if (!validate()) return
     setSubmitting(true)
     await new Promise(r => setTimeout(r, 1200))
-    const orderId = `PC-${Date.now().toString(36).toUpperCase()}`
+    const orderId = `RS-${Date.now().toString(36).toUpperCase()}`
     clearCart()
     navigate('/order-success', { state: { orderId, form, items: items.slice(), total } })
   }
@@ -182,7 +192,7 @@ export default function Checkout() {
                 </div>
               )}
 
-              <div>
+              <div className="mb-6">
                 <label className="block text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
                   Payment Reference Number <span className="text-fuchsia-500">*</span>
                 </label>
@@ -191,6 +201,39 @@ export default function Checkout() {
                   value={form.refNo}
                   onChange={e => set('refNo', e.target.value)} />
                 {errors.refNo && <p className="text-red-400 text-xs mt-1">{errors.refNo}</p>}
+              </div>
+
+              {/* Fulfillment */}
+              <div className="border-t border-slate-100 dark:border-slate-700 pt-5">
+                <h3 className="font-bold text-slate-700 dark:text-slate-300 mb-4">Fulfillment</h3>
+
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                  {[{ id: 'pickup', label: 'Pickup', desc: 'Pick up your printed order at the arranged location.' }, { id: 'delivery', label: 'Delivery', desc: 'We print your order and deliver it to your address.' }].map(o => (
+                    <button key={o.id} onClick={() => set('fulfillment', o.id)}
+                      className={`p-4 rounded-2xl border-2 text-left transition-all ${
+                        form.fulfillment === o.id ? 'border-fuchsia-400 bg-fuchsia-50/50 dark:bg-fuchsia-950/20' : 'border-slate-200 dark:border-slate-700 hover:border-fuchsia-200'
+                      }`}>
+                      <div className="font-bold text-slate-800 dark:text-slate-200">{o.label}</div>
+                      <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">{o.desc}</div>
+                    </button>
+                  ))}
+                </div>
+
+                {form.fulfillment === 'delivery' && (
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
+                      Delivery Address <span className="text-fuchsia-500">*</span>
+                    </label>
+                    <textarea
+                      className={`input-field resize-none ${errors.address ? 'border-red-300' : ''}`}
+                      rows={3}
+                      placeholder="House/Unit No., Street, Barangay, City/Municipality, Province"
+                      value={form.address}
+                      onChange={e => set('address', e.target.value)}
+                    />
+                    {errors.address && <p className="text-red-400 text-xs mt-1">{errors.address}</p>}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -229,6 +272,10 @@ export default function Checkout() {
                 <p><span className="text-slate-400">Name:</span> <strong className="text-slate-700 dark:text-slate-200">{form.name}</strong></p>
                 <p><span className="text-slate-400">Contact:</span> <strong className="text-slate-700 dark:text-slate-200">{form.contact}</strong></p>
                 <p><span className="text-slate-400">Payment:</span> <strong className="text-slate-700 dark:text-slate-200 capitalize">{form.payment} · Ref: {form.refNo}</strong></p>
+                <p><span className="text-slate-400">Fulfillment:</span> <strong className="text-slate-700 dark:text-slate-200 capitalize">{form.fulfillment}</strong></p>
+                {form.fulfillment === 'delivery' && (
+                  <p><span className="text-slate-400">Address:</span> <strong className="text-slate-700 dark:text-slate-200">{form.address}</strong></p>
+                )}
               </div>
             </div>
 
