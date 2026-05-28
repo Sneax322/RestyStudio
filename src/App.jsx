@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -23,6 +23,9 @@ function AppLayout() {
       <Navbar />
       <main>
         <Routes>
+          {/* Default landing page */}
+          <Route index element={<Navigate to="/" replace />} />
+
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetail />} />
