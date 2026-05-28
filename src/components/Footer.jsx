@@ -12,10 +12,10 @@ export default function Footer() {
               <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-fuchsia-500 to-violet-500 flex items-center justify-center">
                 <BookOpen className="w-4 h-4 text-white" />
               </div>
-              <span className="font-black text-lg gradient-text">PaperCraft Studio</span>
+              <span className="font-black text-lg gradient-text">RestyStudio</span>
             </div>
             <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
-              Beautiful printable templates for Filipino students. Made with love for organized studying. 🇵🇭
+              Beautiful printed templates for Filipino students. We print your order and arrange pickup or delivery. 🇵🇭
             </p>
           </div>
 
@@ -23,7 +23,7 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-slate-700 dark:text-slate-300 mb-3 text-sm uppercase tracking-wider">Shop</h4>
             <ul className="space-y-2">
-              {[['/', 'Home'], ['/products', 'All Products'], ['/how-it-works', 'How It Works'], ['/cart', 'Cart']].map(([to, label]) => (
+              {[["/", "Home"], ["/products", "All Products"], ["/how-it-works", "How It Works"], ["/cart", "Cart"]].map(([to, label]) => (
                 <li key={to}>
                   <Link to={to} className="text-slate-500 hover:text-fuchsia-600 dark:text-slate-400 dark:hover:text-fuchsia-400 text-sm transition-colors">
                     {label}
@@ -49,7 +49,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-400">
-          <span>© 2025 PaperCraft Studio. All rights reserved.</span>
+          <span>© 2026 RestyStudio. All rights reserved.</span>
           <span className="flex items-center gap-1">Made with <Heart className="w-3 h-3 text-fuchsia-400 fill-fuchsia-400" /> in the Philippines</span>
         </div>
       </div>
