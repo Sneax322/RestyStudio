@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { Trash2, Minus, Plus, ShoppingCart, ArrowRight } from 'lucide-react'
+import { Trash2, Minus, Plus, ArrowRight } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import NotebookPreview from '../components/NotebookPreview'
 
@@ -12,7 +12,7 @@ export default function Cart() {
       <div className="text-center">
         <div className="text-6xl mb-6 animate-float">🛒</div>
         <h2 className="font-black text-2xl text-slate-800 dark:text-slate-100 mb-3">Your cart is empty</h2>
-        <p className="text-slate-500 dark:text-slate-400 mb-8">Start shopping for beautiful printable templates!</p>
+        <p className="text-slate-500 dark:text-slate-400 mb-8">Start shopping for cute printed notebook labels!</p>
         <Link to="/products" className="btn-primary inline-flex items-center gap-2">
           Browse Products <ArrowRight className="w-4 h-4" />
         </Link>
@@ -105,7 +105,7 @@ export default function Cart() {
                   <span className="font-bold text-slate-700 dark:text-slate-300">Total</span>
                   <span className="font-black text-2xl gradient-text">₱{total}</span>
                 </div>
-                <p className="text-xs text-slate-400 mt-1">+ shipping (if applicable)</p>
+                <p className="text-xs text-slate-400 mt-1">+ delivery fee (if applicable)</p>
               </div>
 
               <button onClick={() => navigate('/checkout')}
