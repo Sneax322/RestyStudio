@@ -1,9 +1,16 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Check, Minus, Plus, ShoppingCart, ChevronLeft } from 'lucide-react'
 import products from '../data/products.json'
 import NotebookPreview from '../components/NotebookPreview'
 import { useCart } from '../context/CartContext'
+
+const DESIGN_CATEGORIES = [
+  { id: 'cartoons', label: 'Cartoons' },
+  { id: 'category-2', label: 'Category 2' },
+  { id: 'category-3', label: 'Category 3' },
+  { id: 'category-4', label: 'Category 4' },
+]
 
 export default function ProductDetail() {
   const { id } = useParams()
@@ -11,7 +18,19 @@ export default function ProductDetail() {
   const { addItem } = useCart()
   const product = products.find(p => p.id === id)
 
-  const [selectedDesign, setSelectedDesign] = useState(product?.designs?.[0] || null)
+  const [selectedCategory, setSelectedCategory] = useState(
+    product?.designs?.[0]?.category || 'cartoons'
+  )
+
+  const designsInCategory = useMemo(() => {
+    if (!product?.designs) return []
+    return product.designs.filter(d => (d.category || 'cartoons') === selectedCategory)
+  }, [product, selectedCategory])
+
+  const [selectedDesign, setSelectedDesign] = useState(
+    designsInCategory?.[0] || product?.designs?.[0] || null
+  )
+
   const [values, setValues] = useState({})
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
@@ -98,26 +117,69 @@ export default function ProductDetail() {
             {/* Design selector */}
             <div>
               <h3 className="font-bold text-slate-700 dark:text-slate-300 mb-3">Choose a Design</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                {product.designs.map(d => (
-                  <button key={d.id} onClick={() => setSelectedDesign(d)}
-                    className={`relative rounded-2xl p-3 text-left transition-all duration-200 border-2 ${
-                      selectedDesign?.id === d.id
-                        ? 'border-fuchsia-400 shadow-md shadow-fuchsia-100 dark:shadow-fuchsia-900/30 scale-[1.02]'
-                        : 'border-transparent hover:border-fuchsia-200 hover:scale-[1.01]'
+
+              {/* 1) Category pills */}
+              <div className="flex flex-wrap gap-2 mb-3">
+                {DESIGN_CATEGORIES.map(c => (
+                  <button
+                    key={c.id}
+                    onClick={() => {
+                      setSelectedCategory(c.id)
+                      const nextDesign = product.designs.find(d => (d.category || 'cartoons') === c.id)
+                      if (nextDesign) setSelectedDesign(nextDesign)
+                      else setSelectedDesign(null)
+                    }}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-colors ${
+                      selectedCategory === c.id
+                        ? 'bg-fuchsia-500 text-white border-fuchsia-500'
+                        : 'bg-white/40 dark:bg-white/5 text-slate-600 dark:text-slate-300 border-slate-200/60 dark:border-slate-700 hover:border-fuchsia-300'
                     }`}
-                    style={{ background: `linear-gradient(135deg, ${d.colorA}, ${d.colorB})` }}>
-                    {selectedDesign?.id === d.id && (
-                      <div className="absolute top-1.5 right-1.5 w-5 h-5 bg-fuchsia-500 rounded-full flex items-center justify-center">
-                        <Check className="w-3 h-3 text-white" strokeWidth={3} />
-                      </div>
-                    )}
-                    <div className="text-xl mb-1">{d.emoji}</div>
-                    <div className="text-xs font-bold" style={{ color: d.accent }}>{d.name}</div>
-                    <div className="text-xs opacity-70" style={{ color: d.accent }}>{d.description}</div>
+                  >
+                    {c.label}
                   </button>
                 ))}
               </div>
+
+              {/* 2) Design thumbnails (filtered by category) */}
+              {designsInCategory.length === 0 ? (
+                <div className="rounded-2xl border border-dashed border-slate-200 dark:border-slate-700 p-4 text-sm text-slate-500 dark:text-slate-400">
+                  No designs yet in this category.
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                  {designsInCategory.map(d => (
+                    <button
+                      key={d.id}
+                      onClick={() => setSelectedDesign(d)}
+                      className={`relative rounded-2xl p-2.5 text-left transition-all duration-200 border-2 overflow-hidden ${
+                        selectedDesign?.id === d.id
+                          ? 'border-fuchsia-400 shadow-md shadow-fuchsia-100 dark:shadow-fuchsia-900/30 scale-[1.02]'
+                          : 'border-transparent hover:border-fuchsia-200 hover:scale-[1.01]'
+                      }`}
+                    >
+                      {selectedDesign?.id === d.id && (
+                        <div className="absolute top-1.5 right-1.5 w-5 h-5 bg-fuchsia-500 rounded-full flex items-center justify-center z-10">
+                          <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                        </div>
+                      )}
+
+                      <div className="w-full aspect-[2/1] rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800">
+                        <img
+                          src={`/designs/${d.id}.png`}
+                          alt={d.name}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+
+                      <div className="mt-2">
+                        <div className="text-xs font-bold" style={{ color: d.accent }}>{d.name}</div>
+                        <div className="text-xs opacity-70" style={{ color: d.accent }}>{d.description}</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Customization fields */}
@@ -172,10 +234,13 @@ export default function ProductDetail() {
 
             {/* Add to cart */}
             <button onClick={handleAddToCart}
+              disabled={!selectedDesign}
               className={`w-full flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-base transition-all duration-300 ${
                 added
                   ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-lg shadow-green-200 dark:shadow-green-900/30 scale-[0.99]'
-                  : 'btn-primary'
+                  : selectedDesign
+                    ? 'btn-primary'
+                    : 'bg-slate-200 dark:bg-slate-800 text-slate-400 cursor-not-allowed'
               }`}>
               {added ? (
                 <><Check className="w-5 h-5" strokeWidth={3} /> Added to Cart!</>
