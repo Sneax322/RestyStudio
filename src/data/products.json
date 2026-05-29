@@ -11,51 +11,11 @@
     "badge": "Best Seller",
     "designs": [
       {
-        "id": "pastel-bloom",
-        "name": "Pastel Bloom",
-        "description": "Soft floral watercolor tones",
-        "accent": "#d946ef",
-        "emoji": "🌸",
-        "category": "cartoons"
-      },
-      {
-        "id": "ocean-breeze",
-        "name": "Ocean Breeze",
-        "description": "Cool blue & mint waves",
-        "accent": "#0891b2",
-        "emoji": "🌊",
-        "category": "cartoons"
-      },
-      {
-        "id": "sunset-vibe",
-        "name": "Sunset Vibe",
-        "description": "Warm peach & golden tones",
-        "accent": "#f97316",
-        "emoji": "🌅",
-        "category": "cartoons"
-      },
-      {
-        "id": "forest-study",
-        "name": "Forest Study",
-        "description": "Earthy greens & warm sage",
-        "accent": "#16a34a",
-        "emoji": "🌿",
-        "category": "cartoons"
-      },
-      {
-        "id": "lavender-dreams",
-        "name": "Lavender Dreams",
-        "description": "Dreamy violet & soft lilac",
-        "accent": "#7c3aed",
-        "emoji": "💜",
-        "category": "cartoons"
-      },
-      {
-        "id": "classic-minimal",
-        "name": "Classic Minimal",
-        "description": "Clean white with bold lines",
-        "accent": "#334155",
-        "emoji": "📐",
+        "id": "bato",
+        "name": "Bato",
+        "description": "Cartoon label design",
+        "accent": "#38b6ff",
+        "emoji": "🪨",
         "category": "cartoons"
       }
     ],
