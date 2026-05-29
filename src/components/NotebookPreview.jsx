@@ -15,18 +15,24 @@ export default function NotebookPreview({ design, values }) {
   const section = (values?.section || 'Section').toString()
 
   const [svgText, setSvgText] = useState(null)
+  const [pngOk, setPngOk] = useState(true)
+  const [svgOk, setSvgOk] = useState(true)
 
   useEffect(() => {
     let cancelled = false
 
     async function load() {
       try {
-        const res = await fetch(`./designs/${d.id}.svg`)
+        setSvgOk(true)
+        const res = await fetch(`./designs/${d.id}.svg`, { cache: 'no-store' })
         if (!res.ok) throw new Error(`Failed to load SVG overlay for ${d.id}`)
         const text = await res.text()
         if (!cancelled) setSvgText(text)
       } catch {
-        if (!cancelled) setSvgText(null)
+        if (!cancelled) {
+          setSvgOk(false)
+          setSvgText(null)
+        }
       }
     }
 
@@ -35,6 +41,11 @@ export default function NotebookPreview({ design, values }) {
     return () => {
       cancelled = true
     }
+  }, [d.id])
+
+  useEffect(() => {
+    // reset PNG status when switching designs
+    setPngOk(true)
   }, [d.id])
 
   const svgWithValues = useMemo(() => {
@@ -46,18 +57,16 @@ export default function NotebookPreview({ design, values }) {
       .replaceAll('{section}', section.slice(0, 20))
   }, [svgText, subject, name, section])
 
+  const showFallback = !pngOk && !svgWithValues
+
   return (
     <div className="w-full flex flex-col items-center gap-3">
       {/* Label preview */}
       <div className="w-full">
         <div
-          className="w-full rounded-2xl shadow-lg overflow-hidden"
+          className="w-full rounded-2xl shadow-lg overflow-hidden bg-white/60 dark:bg-white/5"
           style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.08))' }}
         >
-          {/*
-            Use a padding-top ratio box instead of Tailwind aspect-[2/1]
-            (aspect-ratio plugin may not be enabled, causing height=0).
-          */}
           <div className="relative w-full" style={{ paddingTop: '50%' }}>
             {/* Bottom layer: PNG background */}
             <img
@@ -65,19 +74,37 @@ export default function NotebookPreview({ design, values }) {
               alt={d.name}
               className="absolute inset-0 w-full h-full object-cover"
               draggable={false}
-              onError={(e) => {
-                // Hide broken image icon if the asset is missing
-                e.currentTarget.style.display = 'none'
+              onError={() => {
+                setPngOk(false)
               }}
             />
 
-            {/* Top layer: inline SVG overlay (from /designs/{id}.svg) */}
+            {/* Top layer: inline SVG overlay */}
             {svgWithValues ? (
               <div
                 className="absolute inset-0 w-full h-full pointer-events-none"
                 // eslint-disable-next-line react/no-danger
                 dangerouslySetInnerHTML={{ __html: svgWithValues }}
               />
+            ) : null}
+
+            {/* Fallback: show text even if assets fail to load */}
+            {showFallback ? (
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+                <div className="text-lg font-black text-slate-800 dark:text-slate-100">
+                  {subject.toUpperCase().slice(0, 22)}
+                </div>
+                <div className="mt-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                  {name.slice(0, 30)}
+                </div>
+                <div className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                  {section.slice(0, 20)}
+                </div>
+                <div className="mt-3 text-[11px] text-slate-500 dark:text-slate-400">
+                  Preview assets failed to load ({`png:${pngOk ? 'ok' : 'missing'}`},{' '}
+                  {`svg:${svgOk ? 'ok' : 'missing'}`}).
+                </div>
+              </div>
             ) : null}
           </div>
         </div>
