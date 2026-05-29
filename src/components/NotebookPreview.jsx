@@ -1,3 +1,9 @@
+import { useEffect, useMemo, useState } from 'react'
+
+function escapeRegExp(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 export default function NotebookPreview({ design, values }) {
   const d = design || {
     id: 'pastel-bloom',
@@ -8,9 +14,43 @@ export default function NotebookPreview({ design, values }) {
     category: 'cartoons',
   }
 
-  const subject = values?.subject || 'Subject'
-  const name = values?.name || 'Student Name'
-  const section = values?.section || 'Section'
+  const subject = (values?.subject || 'Subject').toString()
+  const name = (values?.name || 'Student Name').toString()
+  const section = (values?.section || 'Section').toString()
+
+  const [svgText, setSvgText] = useState(null)
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function load() {
+      try {
+        const res = await fetch(`/designs/${d.id}.svg`)
+        if (!res.ok) throw new Error(`Failed to load SVG overlay for ${d.id}`)
+        const text = await res.text()
+        if (!cancelled) setSvgText(text)
+      } catch {
+        if (!cancelled) setSvgText(null)
+      }
+    }
+
+    load()
+
+    return () => {
+      cancelled = true
+    }
+  }, [d.id])
+
+  const svgWithValues = useMemo(() => {
+    if (!svgText) return null
+
+    // Replace only placeholder strings, leaving all SVG structure/styles intact.
+    // We avoid regex surprises by escaping the braces.
+    return svgText
+      .replaceAll('{subject}', subject.toUpperCase().slice(0, 22))
+      .replaceAll('{name}', name.slice(0, 30))
+      .replaceAll('{section}', section.slice(0, 20))
+  }, [svgText, subject, name, section])
 
   return (
     <div className="w-full flex flex-col items-center gap-3">
@@ -21,7 +61,7 @@ export default function NotebookPreview({ design, values }) {
           style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.08))' }}
         >
           <div className="relative w-full aspect-[2/1]">
-            {/* PNG background */}
+            {/* Bottom layer: PNG background */}
             <img
               src={`/designs/${d.id}.png`}
               alt={d.name}
@@ -29,40 +69,14 @@ export default function NotebookPreview({ design, values }) {
               draggable={false}
             />
 
-            {/* Text overlay */}
-            <div className="absolute inset-0 flex items-center justify-center p-4">
+            {/* Top layer: inline SVG overlay (from /designs/{id}.svg) */}
+            {svgWithValues ? (
               <div
-                className="w-full text-center rounded-xl px-3 py-2"
-                style={{
-                  background: 'rgba(255,255,255,0.55)',
-                  backdropFilter: 'blur(6px)',
-                  WebkitBackdropFilter: 'blur(6px)',
-                }}
-              >
-                <div
-                  className="text-[13px] font-extrabold tracking-wide"
-                  style={{ color: d.accent }}
-                >
-                  {subject.toUpperCase().slice(0, 22)}
-                </div>
-                <div
-                  className="h-[2px] w-12 mx-auto my-2 rounded-full"
-                  style={{ backgroundColor: d.accent, opacity: 0.35 }}
-                />
-                <div
-                  className="text-[10px] font-semibold"
-                  style={{ color: d.accent, opacity: 0.85 }}
-                >
-                  {name.slice(0, 30)}
-                </div>
-                <div
-                  className="text-[9px] font-medium"
-                  style={{ color: d.accent, opacity: 0.7 }}
-                >
-                  {section.slice(0, 20)}
-                </div>
-              </div>
-            </div>
+                className="absolute inset-0 w-full h-full"
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{ __html: svgWithValues }}
+              />
+            ) : null}
           </div>
         </div>
       </div>
