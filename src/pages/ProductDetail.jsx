@@ -36,6 +36,9 @@ export default function ProductDetail() {
   const [added, setAdded] = useState(false)
   const [errors, setErrors] = useState({})
 
+  // Ensure design thumbnail URLs resolve correctly on GitHub Pages and nested routes.
+  const baseUrl = import.meta.env.BASE_URL || '/'
+
   if (!product) return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
@@ -165,7 +168,7 @@ export default function ProductDetail() {
 
                       <div className="w-full aspect-[2/1] rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800">
                         <img
-                          src={`/designs/${d.id}.png`}
+                          src={`${baseUrl}designs/${d.id}.png`}
                           alt={d.name}
                           className="w-full h-full object-cover"
                           loading="lazy"
@@ -216,13 +219,13 @@ export default function ProductDetail() {
               <h3 className="font-bold text-slate-700 dark:text-slate-300 mb-3">Quantity</h3>
               <div className="flex items-center gap-3">
                 <button onClick={() => setQty(q => Math.max(1, q - 1))}
-                  className="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-40"
+                  className="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabl[...]"
                   disabled={qty <= 1}>
                   <Minus className="w-4 h-4" />
                 </button>
                 <span className="font-black text-2xl w-8 text-center text-slate-800 dark:text-slate-100">{qty}</span>
                 <button onClick={() => setQty(q => Math.min(20, q + 1))}
-                  className="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-40"
+                  className="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabl[...]"
                   disabled={qty >= 20}>
                   <Plus className="w-4 h-4" />
                 </button>
