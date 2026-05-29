@@ -14,6 +14,12 @@ export default function NotebookPreview({ design, values }) {
   const name = (values?.name || 'Student Name').toString()
   const section = (values?.section || 'Section').toString()
 
+  // Ensure asset URLs resolve correctly on nested routes (e.g. /products/:id)
+  // and on GitHub Pages / custom bases.
+  const baseUrl = import.meta.env.BASE_URL || '/'
+  const pngUrl = `${baseUrl}designs/${d.id}.png`
+  const svgUrl = `${baseUrl}designs/${d.id}.svg`
+
   const [svgText, setSvgText] = useState(null)
   const [pngOk, setPngOk] = useState(true)
   const [svgOk, setSvgOk] = useState(true)
@@ -24,7 +30,7 @@ export default function NotebookPreview({ design, values }) {
     async function load() {
       try {
         setSvgOk(true)
-        const res = await fetch(`./designs/${d.id}.svg`, { cache: 'no-store' })
+        const res = await fetch(svgUrl, { cache: 'no-store' })
         if (!res.ok) throw new Error(`Failed to load SVG overlay for ${d.id}`)
         const text = await res.text()
         if (!cancelled) setSvgText(text)
@@ -41,7 +47,7 @@ export default function NotebookPreview({ design, values }) {
     return () => {
       cancelled = true
     }
-  }, [d.id])
+  }, [d.id, svgUrl])
 
   useEffect(() => {
     // reset PNG status when switching designs
@@ -70,7 +76,7 @@ export default function NotebookPreview({ design, values }) {
           <div className="relative w-full" style={{ paddingTop: '50%' }}>
             {/* Bottom layer: PNG background */}
             <img
-              src={`./designs/${d.id}.png`}
+              src={pngUrl}
               alt={d.name}
               className="absolute inset-0 w-full h-full object-cover"
               draggable={false}
