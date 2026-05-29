@@ -49,7 +49,7 @@ export default function NotebookPreview({ design, values }) {
   return (
     <div className="w-full flex flex-col items-center gap-3">
       {/* Label preview */}
-      <div className="w-full max-w-xs">
+      <div className="w-full">
         <div
           className="w-full rounded-2xl shadow-lg overflow-hidden"
           style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.08))' }}
