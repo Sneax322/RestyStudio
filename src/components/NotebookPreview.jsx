@@ -1,16 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 
-function escapeRegExp(s) {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-}
-
 export default function NotebookPreview({ design, values }) {
   const d = design || {
-    id: 'pastel-bloom',
-    accent: '#d946ef',
-    emoji: '🌸',
-    name: 'Pastel Bloom',
-    description: 'Soft floral watercolor tones',
+    id: 'bato',
+    accent: '#38b6ff',
+    emoji: '🪨',
+    name: 'Bato',
+    description: 'Cartoon label design',
     category: 'cartoons',
   }
 
@@ -25,7 +21,7 @@ export default function NotebookPreview({ design, values }) {
 
     async function load() {
       try {
-        const res = await fetch(`/designs/${d.id}.svg`)
+        const res = await fetch(`./designs/${d.id}.svg`)
         if (!res.ok) throw new Error(`Failed to load SVG overlay for ${d.id}`)
         const text = await res.text()
         if (!cancelled) setSvgText(text)
@@ -44,8 +40,6 @@ export default function NotebookPreview({ design, values }) {
   const svgWithValues = useMemo(() => {
     if (!svgText) return null
 
-    // Replace only placeholder strings, leaving all SVG structure/styles intact.
-    // We avoid regex surprises by escaping the braces.
     return svgText
       .replaceAll('{subject}', subject.toUpperCase().slice(0, 22))
       .replaceAll('{name}', name.slice(0, 30))
@@ -63,10 +57,14 @@ export default function NotebookPreview({ design, values }) {
           <div className="relative w-full aspect-[2/1]">
             {/* Bottom layer: PNG background */}
             <img
-              src={`/designs/${d.id}.png`}
+              src={`./designs/${d.id}.png`}
               alt={d.name}
               className="absolute inset-0 w-full h-full object-cover"
               draggable={false}
+              onError={(e) => {
+                // Hide broken image icon if the asset is missing
+                e.currentTarget.style.display = 'none'
+              }}
             />
 
             {/* Top layer: inline SVG overlay (from /designs/{id}.svg) */}
