@@ -54,7 +54,11 @@ export default function NotebookPreview({ design, values }) {
           className="w-full rounded-2xl shadow-lg overflow-hidden"
           style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.08))' }}
         >
-          <div className="relative w-full aspect-[2/1]">
+          {/*
+            Use a padding-top ratio box instead of Tailwind aspect-[2/1]
+            (aspect-ratio plugin may not be enabled, causing height=0).
+          */}
+          <div className="relative w-full" style={{ paddingTop: '50%' }}>
             {/* Bottom layer: PNG background */}
             <img
               src={`./designs/${d.id}.png`}
@@ -70,7 +74,7 @@ export default function NotebookPreview({ design, values }) {
             {/* Top layer: inline SVG overlay (from /designs/{id}.svg) */}
             {svgWithValues ? (
               <div
-                className="absolute inset-0 w-full h-full"
+                className="absolute inset-0 w-full h-full pointer-events-none"
                 // eslint-disable-next-line react/no-danger
                 dangerouslySetInnerHTML={{ __html: svgWithValues }}
               />
