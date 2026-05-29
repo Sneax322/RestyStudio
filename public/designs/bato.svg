@@ -1,15 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1000" viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMid meet">
   <!--
-    Text placeholders for RestyStudio live preview.
-    Coordinates provided by user (Figma):
-      subject: x=382, y=188, size=160, font=Jua
-      name:    x=232, y=594, size=75,  font=Jua
-      section: x=232, y=692, size=75,  font=Jua
-
-    NOTE: SVG 'y' is baseline. If vertical alignment looks off, tweak y values slightly.
+    Text placeholders for RestyStudio live preview with responsive positioning.
+    Uses percentage-based y values and dominant-baseline for better scaling.
   -->
 
-  <text x="382" y="188" font-family="Jua, sans-serif" font-size="160" fill="#111827">{subject}</text>
-  <text x="232" y="594" font-family="Jua, sans-serif" font-size="75" fill="#111827">{name}</text>
-  <text x="232" y="692" font-family="Jua, sans-serif" font-size="75" fill="#111827">{section}</text>
+  <text x="50%" y="18%" font-family="Jua, sans-serif" font-size="160" fill="#111827" text-anchor="middle" dominant-baseline="middle">{subject}</text>
+  <text x="12%" y="59%" font-family="Jua, sans-serif" font-size="75" fill="#111827" dominant-baseline="middle">{name}</text>
+  <text x="12%" y="69%" font-family="Jua, sans-serif" font-size="75" fill="#111827" dominant-baseline="middle">{section}</text>
 </svg>
